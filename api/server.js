@@ -13,7 +13,7 @@ server.use((req, res, next) => {
 })
 
 // server.use('/api/actions', actionsRouter);
-// server.use('/api/projects', projectsRouter);
+server.use('/api/projects', projectsRouter);
 
 server.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello World' });
