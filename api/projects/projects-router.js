@@ -36,8 +36,12 @@ router.put('/:id', checkId, checkPost, (req, res, next) => {
     .catch(next);
 });
 
-router.delete('/:id', checkId, (req, res) => {
-
+router.delete('/:id', checkId, (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then(() => {
+      res.status(200).json(req.project);
+    }) 
+    .catch(next);
 });
 
 router.get('/:id/actions', checkId, (req, res) => {
