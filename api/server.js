@@ -19,6 +19,10 @@ server.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello World' });
 });
 
+server.get('*', (req, res) => {
+  res.status(404).json({ message: 'Nothing to see here...' });
+});
+
 server.use((error, req, res, next) => { // eslint-disable-line
   res.status(500).json({ message: error.message });
 });
