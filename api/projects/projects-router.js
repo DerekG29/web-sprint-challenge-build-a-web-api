@@ -12,8 +12,12 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id', checkId, (req, res) => {
-  
+router.get('/:id', checkId, (req, res, next) => {
+  try {
+    res.status(200).json(req.project);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post('/', (req, res) => {
