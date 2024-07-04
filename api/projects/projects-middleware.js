@@ -2,7 +2,8 @@ const Projects = require('./projects-model');
 
 module.exports = {
   checkId,
-  checkPost
+  checkPost,
+  checkPut
 }
 
 function checkId(req, res, next) {
@@ -20,9 +21,19 @@ function checkId(req, res, next) {
 }
 
 function checkPost(req, res, next) {
-  const { name, description, completed } = req.body;
-  if (!name || !description || (req.method === 'PUT' ? !completed : false)) {
-    res.status(400).json({ message: 'a name and description are required' });
+  const { name, description } = req.body;
+  if (!name || !description) {
+    res.status(400).json({ message: 'name and description are required' });
+  } else {
+    next();
+  }
+}
+
+function checkPut(req, res, next) {
+  const { name, description } = req.body;
+  const completed = req.body.completed !== undefined;
+  if (!name || !description || !completed) {
+    res.status(400).json({ message: 'name, description, and completed are required' });
   } else {
     next();
   }
