@@ -2,6 +2,7 @@ const Projects = require('./projects-model');
 
 module.exports = {
   checkId,
+  checkPost
 }
 
 function checkId(req, res, next) {
@@ -16,4 +17,13 @@ function checkId(req, res, next) {
       }
     })
     .catch(next);
+}
+
+function checkPost(req, res, next) {
+  const { name, description } = req.body;
+  if (!name || !description) {
+    res.status(400).json({ message: 'a name and description are required' });
+  } else {
+    next();
+  }
 }
