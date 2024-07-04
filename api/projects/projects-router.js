@@ -1,6 +1,6 @@
 const express = require('express');
 const Projects = require('./projects-model');
-const { checkId } = require('./projects-middleware');
+const { checkId, checkPost } = require('./projects-middleware');
 
 const router = express.Router();
 
@@ -20,11 +20,15 @@ router.get('/:id', checkId, (req, res, next) => {
   }
 });
 
-router.post('/', (req, res) => {
-
+router.post('/', checkPost, (req, res, next) => {
+  Projects.insert(req.body)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(next)
 });
 
-router.put('/:id', checkId, (req, res) => {
+router.put('/:id', checkId, checkPost, (req, res) => {
 
 });
 
