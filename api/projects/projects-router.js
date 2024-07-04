@@ -28,8 +28,12 @@ router.post('/', checkPost, (req, res, next) => {
     .catch(next)
 });
 
-router.put('/:id', checkId, checkPost, (req, res) => {
-
+router.put('/:id', checkId, checkPost, (req, res, next) => {
+  Projects.update(req.params.id, req.body)
+    .then(project => {
+      res.status(200).json(project);
+    })
+    .catch(next);
 });
 
 router.delete('/:id', checkId, (req, res) => {
