@@ -40,8 +40,12 @@ router.put('/:id', checkId_actions, checkPut_actions, (req, res, next) => {
     .catch(next);
 });
 
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', checkId_actions, (req, res, next) => {
+  Actions.remove(req.params.id)
+    .then(() => {
+      res.status(200).json(req.action);
+    })
+    .catch(next);
 });
 
 module.exports = router;
