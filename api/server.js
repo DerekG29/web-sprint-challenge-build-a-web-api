@@ -12,7 +12,7 @@ server.use((req, res, next) => {
   next();
 });
 
-// server.use('/api/actions', actionsRouter);
+server.use('/api/actions', actionsRouter);
 server.use('/api/projects', projectsRouter);
 
 server.get('/', (req, res) => {
