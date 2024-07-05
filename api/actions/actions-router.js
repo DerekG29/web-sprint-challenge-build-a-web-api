@@ -2,7 +2,8 @@ const express = require('express');
 const Actions = require('./actions-model');
 const {
   checkId_actions,
-  checkPost_actions
+  checkPost_actions,
+  checkPut_actions
 } = require('./actions-middlware');
 
 const router = express.Router();
@@ -31,8 +32,12 @@ router.post('/', checkPost_actions, (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id', (req, res) => {
-
+router.put('/:id', checkId_actions, checkPut_actions, (req, res, next) => {
+  Actions.update(req.params.id, req.body)
+    .then(action => {
+      res.status(200).json(action)
+    })
+    .catch(next);
 });
 
 router.delete('/:id', (req, res) => {
