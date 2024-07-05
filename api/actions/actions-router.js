@@ -1,5 +1,6 @@
 const express = require('express');
 const Actions = require('./actions-model');
+const { checkId } = require('./actions-middlware');
 
 const router = express.Router();
 
@@ -11,8 +12,12 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id', (req, res) => {
-
+router.get('/:id', checkId, (req, res, next) => {
+  try {
+    res.status(200).json(req.action);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/', (req, res) => {
