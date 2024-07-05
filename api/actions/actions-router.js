@@ -3,8 +3,12 @@ const Actions = require('./actions-model');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello from actions router')
+router.get('/', (req, res, next) => {
+  Actions.get()
+    .then(actions => {
+      res.status(200).json(actions)
+    })
+    .catch(next);
 });
 
 router.get('/:id', (req, res) => {
